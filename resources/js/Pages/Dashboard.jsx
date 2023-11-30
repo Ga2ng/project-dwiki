@@ -197,7 +197,7 @@ export default function Dashboard({ auth }) {
                                         className="mb-4 transition-colors duration-200 hover:text-gray-800 dark:hover:text-white"
                                         style={{ color: "black" }}
                                     >
-                                        <button onClick={()=> scrollToSection('slider')}>Shipping</button>
+                                        <a  href={route("product.show")}>Shipping</a>
                                     </li>
                                     <li
                                         className="mb-4 transition-colors duration-200 hover:text-gray-800 dark:hover:text-white"
