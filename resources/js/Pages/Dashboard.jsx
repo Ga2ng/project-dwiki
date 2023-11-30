@@ -4,6 +4,13 @@ import Logo from "../Assets/logo.jpeg";
 import CardSlider from "@/Components/CardSlider";
 
 export default function Dashboard({ auth }) {
+    const scrollToSection = (sectionId) => {
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.scrollIntoView({ behavior: "smooth" });
+        }
+    };
+
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Dashboard" />
@@ -60,7 +67,9 @@ export default function Dashboard({ auth }) {
                         WHAT'S TRENDING
                     </h1>
                 </div>
-                <CardSlider />
+                <div id="slider" >
+                    <CardSlider />
+                </div>
             </section>
             <section
                 className="bg-center bg-no-repeat bg-cover bg-light-gray-700 bg-blend-multiply"
@@ -113,7 +122,7 @@ export default function Dashboard({ auth }) {
                             customers.
                         </p>
                     </div>
-                    <div className="flex gap-4">
+                    <div id="contact" className="flex gap-4">
                         <Link
                             href={route("cart.index")}
                             class="block py-2 pl-3 pr-4 text-gray-900 rounded hover-bg-gray-100 md:hover-bg-transparent md:border-0 md:hover-text-blue-700 md:p-0 dark-text-black md:dark-hover-text-blue-500 dark-hover-bg-gray-700 dark-hover-text-white md:dark-hover-bg-transparent"
@@ -167,13 +176,13 @@ export default function Dashboard({ auth }) {
                                         className="mb-4 transition-colors duration-200 hover:text-gray-800 dark:hover:text-white"
                                         style={{ color: "black" }}
                                     >
-                                        <a href="#">New Arrivals</a>
+                                        <button onClick={()=> scrollToSection('slider')} >New Arrivals</button>
                                     </li>
                                     <li
                                         className="mb-4 transition-colors duration-200 hover:text-gray-800 dark:hover:text-white"
                                         style={{ color: "black" }}
                                     >
-                                        <a href="#">Best Sellers</a>
+                                        <button  onClick={()=> scrollToSection('slider')}>Best Sellers</button>
                                     </li>
                                 </ul>
                             </div>
@@ -188,13 +197,13 @@ export default function Dashboard({ auth }) {
                                         className="mb-4 transition-colors duration-200 hover:text-gray-800 dark:hover:text-white"
                                         style={{ color: "black" }}
                                     >
-                                        <a href="#">Shipping</a>
+                                        <button onClick={()=> scrollToSection('slider')}>Shipping</button>
                                     </li>
                                     <li
                                         className="mb-4 transition-colors duration-200 hover:text-gray-800 dark:hover:text-white"
                                         style={{ color: "black" }}
                                     >
-                                        <a href="#">Contact Us</a>
+                                        <button onClick={() => scrollToSection('contact')}>Contact Us</button>
                                     </li>
                                 </ul>
                             </div>
@@ -209,13 +218,13 @@ export default function Dashboard({ auth }) {
                                         className="mb-4 transition-colors duration-200 hover:text-white dark:hover:text-white"
                                         style={{ color: "black" }}
                                     >
-                                        <a href="#">Stories</a>
+                                        <a href="https://www.nike.com/id/">Stories</a>
                                     </li>
                                     <li
                                         className="mb-4 transition-colors duration-200 hover:text-white dark:hover:text-white"
                                         style={{ color: "black" }}
                                     >
-                                        <a href="#">News</a>
+                                        <a href="https://www.nike.com/id/">News</a>
                                     </li>
                                 </ul>
                             </div>
@@ -228,7 +237,10 @@ export default function Dashboard({ auth }) {
                 className="px-20 py-10 "
                 style={{ backgroundColor: "black" }}
             >
-                <a href="#" class="flex justify-between items-center items-center">
+                <a
+                    href="#"
+                    class="flex justify-between items-center items-center"
+                >
                     <img
                         src={Logo}
                         class="h-12 mr-3 w-12"
@@ -236,7 +248,7 @@ export default function Dashboard({ auth }) {
                     />
                     <span
                         class="self-left text-1xl font-semibold whitespace-nowrap dark:text-black"
-                        style={{ color: "white", marginLeft: '-500px'}}
+                        style={{ color: "white", marginLeft: "-500px" }}
                     >
                         <p>Lands.Sport</p>
                         <p>Surabaya Kenjeran, Jawa Timur,Indonesia</p>
