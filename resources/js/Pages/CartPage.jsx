@@ -17,7 +17,7 @@ const CartPage = ({ auth, carts }) => {
     }
 
     const handleDelete = (id) => {
-        // console.log("coba cok", id);
+        console.log("coba cok", id);
 
         router.delete(`cart/${id}`, {
             onSuccess: () => {
@@ -128,6 +128,8 @@ const CartPage = ({ auth, carts }) => {
         };
         return date.toLocaleString("id-ID", options); // Sesuaikan dengan locale yang diinginkan
     }
+
+    console.log(cartData);
 
     return (
         <AuthenticatedLayout user={auth.user}>
@@ -360,7 +362,7 @@ const CartPage = ({ auth, carts }) => {
                                                 <button
                                                     onClick={() =>
                                                         handleDelete(
-                                                            data.product_id
+                                                            data.id
                                                         )
                                                     }
                                                     className="cursor-pointer rounded-r bg-red-500 py-1 px-3 duration-100 hover:bg-red-600 text-white"
