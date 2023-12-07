@@ -12,6 +12,9 @@ export default function AuthenticatedLayout({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
 
+    //path url
+    const isProductPage = window.location.pathname.includes("/product");
+
     const [isOpen, setOpen] = useState(false);
     const [selectedTipe, setSelectedTipe] = useState("");
     const openDropDown = (value) => {
@@ -39,7 +42,6 @@ export default function AuthenticatedLayout({ user, header, children }) {
 
     useEffect(() => {
         // Periksa apakah user berada di halaman produk
-        const isProductPage = window.location.pathname.includes("/product");
 
         // Jika bukan halaman produk, kosongkan localStorage
         if (!isProductPage) {
@@ -95,7 +97,11 @@ export default function AuthenticatedLayout({ user, header, children }) {
                     >
                         <ul className="ml-[-100px] flex flex-col justify-between font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white light:bg-gray-800 md:light:bg-gray-900 light:border-gray-700">
                             <div className="flex gap-10">
-                                <li>
+                                <li
+                                    className={`${
+                                        isProductPage ? "" : "hidden"
+                                    }`}
+                                >
                                     <Link
                                         href={route("dashboard")}
                                         className="block py-2 pl-3 pr-4 text-black bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500 dark:bg-blue-600 md:dark:bg-transparent"
@@ -110,7 +116,11 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     onClick={() => handleSubmit()}
                                     >Cari</button>
                                 </li> */}
-                                <li>
+                                <li
+                                    className={`${
+                                        isProductPage ? "" : "hidden"
+                                    }`}
+                                >
                                     <Dropdown>
                                         <Dropdown.Trigger>
                                             <button
@@ -165,7 +175,11 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     </Dropdown>
                                 </li>
 
-                                <li>
+                                <li
+                                    className={`${
+                                        isProductPage ? "" : "hidden"
+                                    }`}
+                                >
                                     <Dropdown>
                                         <Dropdown.Trigger>
                                             <button
@@ -220,7 +234,11 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     </Dropdown>
                                 </li>
 
-                                <li>
+                                <li
+                                    className={`${
+                                        isProductPage ? "" : "hidden"
+                                    }`}
+                                >
                                     <Dropdown>
                                         <Dropdown.Trigger>
                                             <button
