@@ -18,6 +18,21 @@ const ProductCard = ({
     // clickedBuy,
     // onSelectSize,
 }) => {
+
+    //notif
+    const [isNotifFalse, setisNotifFalse] = useState(false);
+    useEffect(() => {
+        if (isNotifFalse) {
+            const timer = setTimeout(() => {
+                setisNotifFalse(false); // Setelah 2-3 detik, hilangkan notifikasi
+            }, 3000); // 2000 milidetik = 2 detik, sesuaikan dengan kebutuhan Anda
+
+            return () => {
+                clearTimeout(timer); // Bersihkan timer jika komponen di-unmount
+            };
+        }
+    }, [isNotifFalse]);
+
     const [selectedSize, setSelectedSize] = useState(null);
 
     function formatNumberWithCommas(number) {
@@ -57,20 +72,28 @@ const ProductCard = ({
         if (selectedSize !== null) {
             setisNotifTrue(true);
             console.log("all value", allValue, user);
-            router.post('/cart',{product_id : allValue.id, user_id : user.id, size : selectedSize }, {
-                onSuccess: () => {
-                    console.log("succes add to cart");
-                    // window.location.href = "/cart";
+            router.post(
+                "/cart",
+                {
+                    product_id: allValue.id,
+                    user_id: user.id,
+                    size: selectedSize,
                 },
-                onError: (error) => {
-                    console.log(error);
-                },
-            })
-
+                {
+                    onSuccess: () => {
+                        console.log("succes add to cart");
+                        // window.location.href = "/cart";
+                    },
+                    onError: (error) => {
+                        console.log(error);
+                    },
+                }
+            );
 
             // Melakukan penambahan ke keranjang atau tindakan lainnya
             // clickedBuy();
         } else {
+            setisNotifFalse(true);
             // Memberikan pesan atau tindakan lainnya jika ukuran null
             console.error("Please select a size before adding to cart.");
         }
@@ -83,12 +106,28 @@ const ProductCard = ({
 
     const handleSizeChange = (e) => {
         // onSelectSize(e.target.value);
-        setSelectedSize(e.target.value)
+        setSelectedSize(e.target.value);
     };
 
+    const tipeLocal = localStorage.getItem("tipe");
+    const kategoriLocal = localStorage.getItem("kategori");
+
+    const filter = () => {
+        if (tipeLocal == null || tipeLocal == null) {
+            return true;
+        } else if (tipeLocal != tipe || kategoriLocal != kategori) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+
+    
+    // console.log(filter());
+
     return (
-        <div className="">
-            <div className="flex bg-white rounded-lg shadow border p-2">
+        <div className={`${filter() ? "" : "hidden"}`}>
+            <div className={`flex bg-white rounded-lg shadow border p-2`}>
                 <div className=" relative flex-none w-24 md:w-48">
                     <img className="h-[22rem]" src={image} alt="img" />
                 </div>
@@ -172,7 +211,7 @@ const ProductCard = ({
                         </a>
                     </div>
                     {user.role === "user" ? (
-                        <div className="flex mb-4 text-sm font-medium">
+                        <div className="flex mb-4 text-sm font-medium mt-[50px]">
                             <button
                                 onClick={() => handleAddCart()}
                                 type="button"
@@ -208,9 +247,19 @@ const ProductCard = ({
                         Free shipping on all continental US orders.
                     </p>
                     {isNotifTrue && (
-                        <div className="text-sm text-green-500" >Produk Berhasil Ditambahkan</div>
+                        <div className="text-sm text-green-500">
+                            Produk Berhasil Ditambahkan
+                        </div>
                     )}
+                    {
+                        isNotifFalse && (
+                            <div >
+                                <p className="font-bold text-red-500 text-lg " >Silahkan pilih size terlebih dahulu!!</p>
+                            </div>
+                        )
+                    }
                 </form>
+                
             </div>
         </div>
     );

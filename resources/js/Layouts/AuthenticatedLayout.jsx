@@ -13,12 +13,12 @@ export default function AuthenticatedLayout({ user, header, children }) {
         useState(false);
 
     const [isOpen, setOpen] = useState(false);
-    const [selectedTipe, setSelectedTipe] = useState('');
+    const [selectedTipe, setSelectedTipe] = useState("");
     const openDropDown = (value) => {
         setOpen(!isOpen);
         // setSelectedTipe(value)
-        console.log('clicked', value)
-    }    
+        console.log("clicked", value);
+    };
 
     const tipe = localStorage.getItem("tipe");
     const kategori = localStorage.getItem("kategori");
@@ -28,12 +28,25 @@ export default function AuthenticatedLayout({ user, header, children }) {
     const handleKategoriChange = (value) => {
         localStorage.setItem("kategori", value);
     };
-    const handleSubmit = () => {
-        router.get("/product", { tipe: tipe, kategori: kategori });
+    // const handleSubmit = () => {
+    //     router.get("/product", { tipe: tipe, kategori: kategori });
+    // };
+
+    const clearLocalStorage = () => {
+        localStorage.clear();
+        console.log("localStorage cleared!");
     };
 
+    useEffect(() => {
+        // Periksa apakah user berada di halaman produk
+        const isProductPage = window.location.pathname.includes("/product");
 
-    console.log("selected", tipe, kategori);
+        // Jika bukan halaman produk, kosongkan localStorage
+        if (!isProductPage) {
+            clearLocalStorage();
+        }
+    }, []);
+    // console.log("selected", tipe, kategori);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -59,7 +72,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                         aria-controls="navbar-dropdown"
                         aria-expanded="false"
                     >
-                        <span className="sr-only">Open main  menu</span>
+                        <span className="sr-only">Open main menu</span>
                         <svg
                             className="w-5 h-5"
                             aria-hidden="true"
@@ -91,17 +104,19 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                         Home
                                     </Link>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <button
                                     className="bg-blue-500 px-4 text-white rounded-md"
                                     onClick={() => handleSubmit()}
                                     >Cari</button>
-                                </li>
+                                </li> */}
                                 <li>
                                     <Dropdown>
                                         <Dropdown.Trigger>
                                             <button
-                                                onClick={() => handleKategoriChange('kids')}
+                                                onClick={() =>
+                                                    handleKategoriChange("Kids")
+                                                }
                                                 id="dropdownNavbarLink"
                                                 data-dropdown-toggle="dropdownNavbar"
                                                 className="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-black md:dark:hover:text-blue-500 dark:focus:text-black dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
@@ -125,13 +140,25 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                             </button>
                                         </Dropdown.Trigger>
                                         <Dropdown.Content>
-                                            <Dropdown.Link onClick={() => handleTipeChange('sneakers')}  >
+                                            <Dropdown.Link
+                                                onClick={() =>
+                                                    handleTipeChange("Sneakers")
+                                                }
+                                            >
                                                 Sneakers
                                             </Dropdown.Link>
-                                            <Dropdown.Link onClick={() => handleTipeChange('casual')} >
+                                            <Dropdown.Link
+                                                onClick={() =>
+                                                    handleTipeChange("casual")
+                                                }
+                                            >
                                                 Casual
                                             </Dropdown.Link>
-                                            <Dropdown.Link onClick={() => handleTipeChange('running')} >
+                                            <Dropdown.Link
+                                                onClick={() =>
+                                                    handleTipeChange("running")
+                                                }
+                                            >
                                                 Running
                                             </Dropdown.Link>
                                         </Dropdown.Content>
@@ -142,7 +169,9 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     <Dropdown>
                                         <Dropdown.Trigger>
                                             <button
-                                                onClick={() => handleKategoriChange('men')}
+                                                onClick={() =>
+                                                    handleKategoriChange("men")
+                                                }
                                                 id="dropdownNavbarLink"
                                                 data-dropdown-toggle="dropdownNavbar"
                                                 className="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-black md:dark:hover:text-blue-500 dark:focus:text-black dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
@@ -166,13 +195,25 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                             </button>
                                         </Dropdown.Trigger>
                                         <Dropdown.Content>
-                                            <Dropdown.Link onClick={() => handleTipeChange('sneakers') }>
+                                            <Dropdown.Link
+                                                onClick={() =>
+                                                    handleTipeChange("Sneakers")
+                                                }
+                                            >
                                                 Sneakers
-                                            </Dropdown.Link  >
-                                            <Dropdown.Link onClick={() => handleTipeChange('casual')} > 
+                                            </Dropdown.Link>
+                                            <Dropdown.Link
+                                                onClick={() =>
+                                                    handleTipeChange("casual")
+                                                }
+                                            >
                                                 Casual
                                             </Dropdown.Link>
-                                            <Dropdown.Link onClick={() => handleTipeChange('running')} >
+                                            <Dropdown.Link
+                                                onClick={() =>
+                                                    handleTipeChange("running")
+                                                }
+                                            >
                                                 Running
                                             </Dropdown.Link>
                                         </Dropdown.Content>
@@ -183,7 +224,11 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     <Dropdown>
                                         <Dropdown.Trigger>
                                             <button
-                                                onClick={() => handleKategoriChange('women')}
+                                                onClick={() =>
+                                                    handleKategoriChange(
+                                                        "women"
+                                                    )
+                                                }
                                                 id="dropdownNavbarLink"
                                                 data-dropdown-toggle="dropdownNavbar"
                                                 className="flex items-center justify-between w-full py-2 pl-3 pr-4 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-black md:dark:hover:text-blue-500 dark:focus:text-black dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"
@@ -207,13 +252,25 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                             </button>
                                         </Dropdown.Trigger>
                                         <Dropdown.Content>
-                                            <Dropdown.Link onClick={() => handleTipeChange('sneakers')} >
+                                            <Dropdown.Link
+                                                onClick={() =>
+                                                    handleTipeChange("Sneakers")
+                                                }
+                                            >
                                                 Sneakers
                                             </Dropdown.Link>
-                                            <Dropdown.Link onClick={() => handleTipeChange('casual')} >
+                                            <Dropdown.Link
+                                                onClick={() =>
+                                                    handleTipeChange("casual")
+                                                }
+                                            >
                                                 Casual
                                             </Dropdown.Link>
-                                            <Dropdown.Link onClick={() => handleTipeChange('running')} >
+                                            <Dropdown.Link
+                                                onClick={() =>
+                                                    handleTipeChange("running")
+                                                }
+                                            >
                                                 Running
                                             </Dropdown.Link>
                                         </Dropdown.Content>
